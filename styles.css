@@ -1,0 +1,314 @@
+/* ==========================================================================
+   VARIABLES GLOBALES Y TEMAS DE USUARIO (REQUERIMIENTO RÚBRICA UCAB)
+   ========================================================================== */
+:root {
+    --bg-primary: #f7fafc;
+    --bg-card: #ffffff;
+    --text-main: #2d3748;
+    --text-muted: #718096;
+    --border-color: #cbd5e0;
+    --ucab-blue: #0066cc;
+    --ucab-hover: #004c99;
+    --btn-success: #28a745;
+    --btn-success-hover: #218838;
+    --btn-danger: #e53e3e;
+    --btn-danger-hover: #c53030;
+}
+
+[data-theme="dark"] {
+    --bg-primary: #1a202c;
+    --bg-card: #2d3748;
+    --text-main: #f7fafc;
+    --text-muted: #a0aec0;
+    --border-color: #4a5568;
+    --ucab-blue: #4299e1;
+    --ucab-hover: #3182ce;
+    --btn-success: #48bb78;
+    --btn-success-hover: #38a169;
+    --btn-danger: #f56565;
+    --btn-danger-hover: #e53e3e;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    padding-bottom: 50px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ==========================================================================
+   ESTILOS COHERENTES PARA COMPONENTES DE FORMULARIO (INPUTS, SELECTS, ETC)
+   ========================================================================== */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="url"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 14px;
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--ucab-blue);
+    box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.2);
+}
+
+/* Paleta de Colores Uniforme para Botones Globales */
+button {
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Variantes de Botones de Acción */
+.btn-primary, .btn-auth-action, .btn-action, .btn-add-cart {
+    background-color: var(--ucab-blue);
+    color: #ffffff;
+}
+.btn-primary:hover, .btn-auth-action:hover, .btn-action:hover, .btn-add-cart:hover {
+    background-color: var(--ucab-hover);
+}
+
+.btn-success, .btn-checkout-pay, .btn-pay-confirm {
+    background-color: var(--btn-success);
+    color: #ffffff;
+}
+.btn-success:hover, .btn-checkout-pay:hover:not(:disabled), .btn-pay-confirm:hover {
+    background-color: var(--btn-success-hover);
+}
+
+.btn-danger, .btn-pay-cancel {
+    background-color: var(--btn-danger);
+    color: #ffffff;
+}
+.btn-danger:hover, .btn-pay-cancel:hover {
+    background-color: var(--btn-danger-hover);
+}
+
+.btn-secondary, .btn-back-home {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+}
+.btn-secondary:hover, .btn-back-home:hover {
+    background-color: var(--border-color);
+}
+
+/* ==========================================================================
+   ESTRUCTURA DE CABECERA Y NAVEGACIÓN
+   ========================================================================== */
+.main-header {
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.status-bar {
+    font-size: 0.85rem;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+}
+.status-bar.online { background-color: #c6f6d5; color: #22543d; }
+[data-theme="dark"] .status-bar.online { background-color: #234e33; color: #c6f6d5; }
+.status-bar.offline { background-color: #fed7d7; color: #742a2a; }
+[data-theme="dark"] .status-bar.offline { background-color: #631c1c; color: #fed7d7; }
+
+.btn-theme {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+.btn-theme:hover {
+    background-color: var(--border-color);
+}
+
+.header-core {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo { font-size: 1.6rem; font-weight: 800; color: var(--text-main); }
+.logo-sub { color: var(--ucab-blue); }
+
+.nav-menu { display: flex; gap: 5px; }
+.nav-menu button {
+    background: none;
+    color: var(--text-main);
+}
+.nav-menu button:hover { background-color: var(--bg-primary); }
+
+.user-zone { font-size: 0.9rem; font-weight: bold; color: var(--ucab-blue); cursor: pointer; }
+
+/* ==========================================================================
+   VISTAS DE LA SPA
+   ========================================================================== */
+.spa-view { display: block; animation: fadeIn 0.4s ease; max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+.hidden-element { display: none !important; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.section-title { margin-bottom: 25px; font-size: 1.5rem; position: relative; padding-bottom: 8px; color: var(--text-main); }
+.section-title::after { content: ''; width: 50px; height: 3px; background-color: var(--ucab-blue); position: absolute; bottom: 0; left: 0; }
+
+.hero-section {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 40px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.hero-section h2 { margin-bottom: 10px; color: var(--text-main); }
+.hero-section p { color: var(--text-muted); }
+
+/* BARRA DE FILTROS */
+.filters-bar {
+    background-color: var(--bg-card);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.filter-group { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 180px; }
+.filter-group label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+
+/* INPUT RANGE PERSONALIZADO */
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: var(--bg-primary);
+    height: 6px;
+    border-radius: 3px;
+    outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--ucab-blue);
+    cursor: pointer;
+}
+
+/* TARJETAS DE PRODUCTOS */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.producto-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+}
+
+.producto-card img { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid var(--border-color); }
+.producto-info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; gap: 10px;}
+
+/* ==========================================================================
+   ALINEACIÓN CENTRADA Y RESPONSIVA PARA LA SECCIÓN DE PERFIL
+   ========================================================================== */
+#auth-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(80vh - 100px); /* Centrado vertical en el viewport */
+    width: 100%;
+}
+
+.profile-centered-layout {
+    width: 100%;
+    max-width: 500px; /* Ancho elegante en escritorio */
+    margin: 0 auto;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 35px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.profile-internal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.profile-internal-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left; /* Mantiene las etiquetas alineadas de forma correcta */
+}
+
+/* Ajustes adaptativos para pantallas pequeñas */
+@media (max-width: 580px) {
+    .profile-centered-layout {
+        max-width: 100%;
+        padding: 20px 15px;
+        border-radius: 8px;
+    }
+}
+
+

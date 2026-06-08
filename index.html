@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Virtual UCAB - E-Commerce</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-top">
+            <div id="connection-status" class="status-bar online">Modo Online</div>
+            <button id="theme-toggle" class="btn-theme">🌙 Modo Oscuro</button>
+        </div>
+        <div class="header-core">
+            <h1 class="logo">🇻🇪 UCAB <span class="logo-sub">Store</span></h1>
+            <nav class="nav-menu">
+                <button onclick="navegarA('inicio')">🏠 Inicio</button>
+                <button onclick="navegarA('catalogo')">🛒 Productos</button>
+                <button id="nav-cart-tab" class="hidden-element" onclick="navegarA('carrito')">🛍️ Carrito (<span id="cart-count">0</span>)</button>
+                <button onclick="mostrarSeccionPerfil()">👤 Perfil</button>
+            </nav>
+            <div id="nav-user-zone" class="user-zone">
+                <span class="nav-username" onclick="mostrarSeccionPerfil()">🔑 Iniciar Sesión / Registro</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section id="vista-inicio" class="spa-view">
+            <div class="hero-section">
+                <h2>¡Bienvenido a UCAB Store!</h2>
+                <p>Tu portal universitario de compras con persistencia local y soporte offline avanzado.</p>
+            </div>
+            <h3 class="section-title">Productos Destacados</h3>
+            <div id="destacados-container" class="products-grid">
+                </div>
+        </section>
+
+        <section id="vista-catalogo" class="spa-view hidden-element">
+            <h2 class="section-title">Nuestro Catálogo</h2>
+            
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label for="search-input">Buscar por Nombre</label>
+                    <input type="text" id="search-input" placeholder="Ej. Laptop, teclado..." oninput="filtrarProductos()">
+                </div>
+                <div class="filter-group">
+                    <label for="category-select">Categoría</label>
+                    <select id="category-select" onchange="filtrarProductos()">
+                        <option value="todos">Todas las categorías</option>
+                        <option value="Tecnología">Tecnología</option>
+                        <option value="Audio">Audio</option>
+                        <option value="Accesorios">Accesorios</option>
+                        <option value="Periféricos">Periféricos</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="price-range">Precio Máximo: $<span id="price-val">1500</span></label>
+                    <input type="range" id="price-range" min="0" max="1500" value="1500" oninput="actualizarFiltroPrecio()">
+                </div>
+            </div>
+
+            <div id="catalogo-container" class="products-grid">
+                </div>
+        </section>
+
+        <section id="vista-carrito" class="spa-view hidden-element">
+            <h2 class="section-title">Tu Carrito de Compras</h2>
+            <div class="cart-layout">
+                <div id="carrito-items-list">
+                    </div>
+                <div class="cart-summary-card">
+                    <h3>Resumen del Pedido</h3>
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="cart-subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Envío:</span>
+                        <span style="color: #28a745; font-weight: bold;">Gratis</span>
+                    </div>
+                    <div class="summary-row total-row">
+                        <span>Total:</span>
+                        <span id="cart-total">$0.00</span>
+                    </div>
+                    <button id="btn-checkout" class="btn-checkout-pay" disabled onclick="abrirPasarela()">Proceder al Pago</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="auth-section" class="spa-view hidden-element">
+            
+            <div id="login-form-wrapper" class="auth-card">
+                <h2>🔑 Iniciar Sesión</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="login-email" required placeholder="ejemplo@ucab.edu.ve">
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="login-pass" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">Ingresar al Sistema</button>
+                </form>
+                <p class="toggle-auth-text">¿No tienes cuenta? <span onclick="conmutarFormularios(true)">Regístrate aquí</span></p>
+            </div>
+
+            <div id="register-form-wrapper" class="auth-card hidden-element">
+                <h2>📝 Crear Cuenta</h2>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label>Nombre Completo</label>
+                        <input type="text" id="reg-name" required placeholder="Juan Pérez">
+                    </div>
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="reg-email" required placeholder="usuario@ucab.edu.ve">
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="reg-pass" required placeholder="Mínimo 4 caracteres">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Usuario (Rol)</label>
+                        <select id="reg-role">
+                            <option value="Cliente">Cliente Estándar</option>
+                            <option value="Administrador">Administrador de Tienda</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-success" style="width: 100%; margin-top: 10px;">Completar Registro</button>
+                </form>
+                <p class="toggle-auth-text">¿Ya tienes cuenta? <span onclick="conmutarFormularios(false)">Inicia sesión</span></p>
+            </div>
+
+            <div id="profile-panel" class="auth-card profile-centered-layout hidden-element">
+                <h2>👤 Mi Perfil Activo</h2>
+                
+                <div class="profile-info-display">
+                    <img id="profile-avatar-img" src="https://via.placeholder.com/100" alt="Avatar" class="profile-avatar">
+                    <div class="profile-text">
+                        <h3 id="profile-display-name">Cargando...</h3>
+                        <p id="profile-display-role" class="role-badge">Cliente</p>
+                    </div>
+                </div>
+
+                <form id="profile-update-form" class="profile-internal-form">
+                    <div class="form-group">
+                        <label>Nueva Contraseña</label>
+                        <input type="password" id="profile-new-pass" placeholder="Ingresa una nueva contraseña para cambiarla">
+                    </div>
+                    
+                    <div id="profile-client-fields" class="hidden-element">
+                        <div class="form-group">
+                            <label>URL del Avatar (Imagen)</label>
+                            <input type="url" id="profile-avatar-url" placeholder="https://enlace-de-tu-imagen.com/foto.jpg">
+                        </div>
+                        <div class="form-group">
+                            <label>Dirección de Envío Principal</label>
+                            <textarea id="profile-address" rows="3" placeholder="Ej. Urbanización Montalbán, Sede UCAB..."></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-success" style="width: 100%; margin-top: 10px;">💾 Guardar Cambios</button>
+                </form>
+
+                <hr style="border: none; border-top: 1px solid var(--border-color); margin: 20px 0;">
+                <button class="btn-danger" style="width: 100%;" onclick="cerrarSesion()">Cerrar Sesión Activa</button>
+            </div>
+
+        </section>
+
+        <section id="admin-master-container" class="admin-master-card hidden-element">
+            <div class="admin-panel-header">
+                <h2>🛠️ Panel de Control Maestro (Administrador)</h2>
+                <p>Gestión global de inventario, métricas financieras en tiempo real y despacho de órdenes de compra.</p>
+            </div>
+
+            <div class="admin-nav-tabs">
+                <button id="btn-tab-inventario" class="active-tab" onclick="cambiarPestanaAdmin('inventario', this)">📦 Inventario CRUD</button>
+                <button id="btn-tab-dashboard" onclick="cambiarPestanaAdmin('dashboard', this)">📊 Dashboard KPI</button>
+                <button id="btn-tab-ventas" onclick="cambiarPestanaAdmin('ventas', this)">📋 Historial de Ventas</button>
+            </div>
+
+            <div id="admin-tab-inventario">
+                <form id="crud-form" class="crud-form-layout">
+                    <input type="hidden" id="crud-id">
+                    <div class="form-group-grid">
+                        <div class="input-box">
+                            <label>Título del Producto</label>
+                            <input type="text" id="crud-titulo" required placeholder="Ej. Monitor Smart 24'">
+                        </div>
+                        <div class="input-box">
+                            <label>Precio ($ USD)</label>
+                            <input type="number" id="crud-precio" required step="0.01" min="1" placeholder="299.99">
+                        </div>
+                        <div class="input-box">
+                            <label>Categoría</label>
+                            <select id="crud-categoria">
+                                <option value="Tecnología">Tecnología</option>
+                                <option value="Audio">Audio</option>
+                                <option value="Accesorios">Accesorios</option>
+                                <option value="Periféricos">Periféricos</option>
+                            </select>
+                        </div>
+                        <div class="input-box">
+                            <label>URL de la Imagen</label>
+                            <input type="url" id="crud-imagen" placeholder="https://enlace.com/imagen.jpg">
+                        </div>
+                    </div>
+                    <div class="crud-action-buttons">
+                        <button type="submit" id="btn-crud-submit" class="btn-primary">Crear Producto</button>
+                        <button type="button" id="btn-crud-cancel" class="btn-secondary hidden-element" onclick="limpiarFormularioCRUD()">Cancelar Edición</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="admin-tab-dashboard" class="hidden-element">
+                <div class="kpi-dashboard-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon">💰</div>
+                        <div class="kpi-data"><h4 id="dash-total-ventas">$0.00</h4><p>Ingresos Totales</p></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon">👥</div>
+                        <div class="kpi-data">
+                            <div class="traffic-split">
+                                <div><h4 id="dash-usuarios-registrados">0</h4><p>Registrados</p></div>
+                                <span class="traffic-divider">|</span>
+                                <div><h4 id="dash-usuarios-activos">0</h4><p>Activos</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-extended-section">
+                    <div class="ranking-box-card">
+                        <h4>🔥 Top 3 Productos Más Vendidos</h4>
+                        <ul id="dash-top-productos-lista" class="top-ranking-list"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="admin-tab-ventas" class="hidden-element">
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID Pedido</th>
+                                <th>Cliente / Dirección</th>
+                                <th>Productos Solicitados</th>
+                                <th>Total Facturado</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-orders-rows">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="checkout-modal" class="modal-overlay hidden-element">
+        <div class="modal-card">
+            <h2>💳 Pasarela de Pago Simulada</h2>
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label>Número de Tarjeta (16 dígitos)</label>
+                    <input type="text" id="card-number" maxlength="16" required placeholder="4000123456789010">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Vencimiento</label>
+                        <input type="text" placeholder="MM/AA" required>
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="password" maxlength="3" required placeholder="123">
+                    </div>
+                </div>
+                <div class="modal-actions" style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="submit" class="btn-pay-confirm" style="flex: 1;">Confirmar y Facturar</button>
+                    <button type="button" class="btn-pay-cancel" style="flex: 1;" onclick="cerrarPasarela()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
